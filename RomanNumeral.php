@@ -5,8 +5,9 @@ class RomanNumeral
     public function __construct ( $numeral )
     {
         $this->_value = $numeral;
-        $this->_lookup =array (
-        'I'=> 1,
+        $this->_lookup = array (
+        ''  => 0,    
+        'I' => 1,
         'V' => 5,
         'X' => 10,
         'L' => 50,
@@ -28,13 +29,17 @@ class RomanNumeral
 
     public function addEmUp($numerals) {
         $calculated = 0;
-        // array ('X', 'L', 'I', 'X')
-        $numerals = array_reverse($numerals);
-        // array ('X', 'I', 'L', 'X')
+        $last       = '';
+        $numerals   = array_reverse($numerals);
+        
         foreach ($numerals as $numeral) {
-            // numeral = X , calculated = 0
-
-            $calculated += $this->_lookup[$numeral];
+            if( $this->_lookup[$numeral] < $this->_lookup[$last] ){
+                $calculated -= $this->_lookup[$numeral];
+            }
+            else{
+                $calculated += $this->_lookup[$numeral];
+            }
+            $last = $numeral;
         }
         return $calculated;
     }
