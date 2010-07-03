@@ -6,6 +6,7 @@ require_once 'RomanNumeral.php';
 class MainTest
 extends PHPUnit_Framework_TestCase
 {
+
     public function provide_numerals ( )
     {
         return array(
@@ -32,18 +33,30 @@ extends PHPUnit_Framework_TestCase
         ); // END datasets
     }
 
-    /**
-     * @dataProvider provide_numerals
-     * @param integer $expected
-     * @param string $numeral
-     */
-    public function test_basic_stuff ( $expected, $numeral )
-    {
-        $Numeral = new RomanNumeral($numeral);
+    public function provide_decimals(){
+        return array(
+            array( '', 0 ),
+            array( 'I', 1 ),
+            array( 'II', 2 ),
+            array( 'III', 3 ),
+            array( 'IV', 4 ),
+            array( 'V', 5 ),
+            array( 'IX', 9 ),
+            array( 'X', 10 ),
+            array( 'XI', 11 ),
+            array( 'XII', 12 ),
+            array( 'XIV', 14 ),
+            array( 'XIX', 19 ),
+            array( 'XXX', 30 ),
+            array( 'XL', 40 ),
+            array( 'L', 50 ),
+            array( 'C', 100 ),
+            array( 'D', 500 ),
+            array( 'M', 1000 ),
+            array( 'MCCXXXIV', 1234 ),
+        );
+    } //END provide_decimals
 
-        $this->assertEquals($expected, $Numeral->toInt());
-
-    }
     public function provide_parsables(){
         return array(
             array(array('I'), 'I'),
@@ -54,27 +67,39 @@ extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function setup(){
+        $this->fixture = new RomanNumeral;
+        $this->assertTrue( ($this->fixture instanceof RomanNumeral), 'This is not a roman numeral' );
+    } //END setup
+
     /**
      * @dataProvider provide_parsables
      * @param integer $expected
      * @param string $numeral
      */
-    public function test_parse( $expected, $numeral ){
-        $Numeral = new RomanNumeral($numeral);
-        $this->assertEquals($expected, $Numeral->parse());
+    public function test_parse( $expected, $RomanNumeral ){
+        $this->assertEquals($expected, $this->fixture->parseRoman( $RomanNumeral ));
     }
 
 
      /**
      * @dataProvider provide_numerals
      * @param integer $expected
-     * @param string $numeral
+     * @param string $romanNumeral
      */
-    public function test_addEmUp($expected, $numeral) {
-        $Numeral = new RomanNumeral($numeral);
-        $parsed = $Numeral->parse();
-        $this->assertEquals($expected, $Numeral->addEmUp($parsed));
+    public function test_toInt( $expected, $romanNumeral ) {
+        $this->assertEquals($expected, $this->fixture->toInt( $romanNumeral ) );
     }
+
+
+     /**
+     * @dataProvider provide_decimals
+     * @param string $expected
+     * @param integer $integer
+     */
+    public function test_fromInt( $expected, $integer ){
+        $this->assertEquals( $expected, $this->fixture->fromInt( $integer ) );
+    } //END test_fromDecimal 
 
 } // END RomanNumeralTest
 
