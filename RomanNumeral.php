@@ -62,16 +62,9 @@ class RomanNumeral
         if ( $integer == 0 ) return ''; //Is there a roman 0 ?
         
         /**
-         * The decimal has to be converted to a string then
-         * broken down into its positional values
-         * once the positional value integers are obtained they
-         * have to be multiplied by ten to get their value
-         * once we have the value we look it up to get the
-         * roman representation the concatenate the string
-         * this is totally BS, but is a good place to start
          * I have got it to where for base ten numbers it works but the problem 
-         * is that the stupid romans did not use base ten, then have 500 and 5 
-         * and 50 and they don't have 0 as far as I can tell I just added it 
+         * is that the stupid romans did not use base ten, they have 500 and 5 
+         * and 50 and they don't have 0 as far as I can tell, I just added it 
          * in. In order to pass the test for the failing data I have to figure 
          * out the logic for these altered bases as well as the subtraction 
          * logic.
@@ -83,12 +76,12 @@ class RomanNumeral
 
         /**
          * Loop over our integer string array using the index as the positional 
-         * place holder, and the value tells us how many time we need that 
+         * place holder, and the value tells us how many times we need that 
          * roman numeral.  This currently does not take into account the 
          * subtraction conditions that the roman system uses
          */
         //@TODO Figure out when to do  subtraction stuff and how to get those 
-        //bases that our ten base system does not use, i.e. 500 and 50
+        //bases that our ten base system does not use, i.e. 5, 50 and 500
         foreach( $integer as $position => $value ){
             $lookupIndex = pow(10, ( $position ) );
             for( $i = 0; $i < $value; $i++ ){
@@ -96,7 +89,7 @@ class RomanNumeral
             }
         }
         //We return our roman numeral string in reverse order cause the romans 
-        //are even more backward than we are.
+        //were even more backward than we are.
         return implode( array_reverse( str_split( $romanNumeral ) ) );
     }
 
