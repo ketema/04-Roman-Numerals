@@ -22,11 +22,11 @@ class RomanNumeral
      */
     private $_romanValue = null;
     /**
-     * roman2decimal 
+     * _roman2decimal 
      * 
      * @var array
      */
-    private $roman2decimal = array (
+    private $_roman2decimal = array (
         'M'  => 1000,
         'CM' => 900,
         'D'  => 500,
@@ -85,13 +85,13 @@ class RomanNumeral
         
         foreach ($romanNumerals as $romanNumeral)
         {
-            if( $this->roman2decimal[$romanNumeral] < $this->roman2decimal[$last] )
+            if( $this->_roman2decimal[$romanNumeral] < $this->roman2decimal[$last] )
             {
-                $calculated -= $this->roman2decimal[$romanNumeral];
+                $calculated -= $this->_roman2decimal[$romanNumeral];
             }
             else
             {
-                $calculated += $this->roman2decimal[$romanNumeral];
+                $calculated += $this->_roman2decimal[$romanNumeral];
             }
             $last = $romanNumeral;
         }
@@ -114,7 +114,7 @@ class RomanNumeral
 
         if ( $integer == 0 ) return 'N';
 
-        foreach( $this->roman2decimal as $romanIndex => $integerValue )
+        foreach( $this->_roman2decimal as $romanIndex => $integerValue )
         {
             while( $integer >= $integerValue && $integerValue != 0 ){
                 $integer -= $integerValue;
