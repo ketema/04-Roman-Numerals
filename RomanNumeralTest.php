@@ -10,6 +10,7 @@ extends PHPUnit_Framework_TestCase
     public function provide_numerals ( )
     {
         return array(
+            array( 0, 'N' ),
             array( 1, 'I' ),
             array( 2, 'II' ),
             array( 3, 'III' ),
@@ -35,7 +36,7 @@ extends PHPUnit_Framework_TestCase
 
     public function provide_decimals(){
         return array(
-            array( '', 0 ),
+            array( 'N', 0 ),
             array( 'I', 1 ),
             array( 'II', 2 ),
             array( 'III', 3 ),
@@ -54,6 +55,7 @@ extends PHPUnit_Framework_TestCase
             array( 'D', 500 ),
             array( 'M', 1000 ),
             array( 'MCCXXXIV', 1234 ),
+            array( 'MMMCMXCIX', 3999 ),
         );
     } //END provide_decimals
 
@@ -68,7 +70,7 @@ extends PHPUnit_Framework_TestCase
     }
 
     public function setup(){
-        $this->fixture = new RomanNumeral;
+        $this->fixture = new RomanNumeral();
         $this->assertTrue( ($this->fixture instanceof RomanNumeral), 'This is not a roman numeral' );
     } //END setup
 
@@ -81,7 +83,6 @@ extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->fixture->parseRoman( $RomanNumeral ));
     }
 
-
      /**
      * @dataProvider provide_numerals
      * @param integer $expected
@@ -91,7 +92,6 @@ extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->fixture->toInt( $romanNumeral ) );
     }
 
-
      /**
      * @dataProvider provide_decimals
      * @param string $expected
@@ -100,6 +100,15 @@ extends PHPUnit_Framework_TestCase
     public function test_fromInt( $expected, $integer ){
         $this->assertEquals( $expected, $this->fixture->fromInt( $integer ) );
     } //END test_fromDecimal 
+
+    public function test_instantiation(){
+        $object = new RomanNumeral();
+        $object->toInt('CLM');
+        $this->assertTrue( ( $object instanceof RomanNumeral ), 'This is not a roman numeral' );
+        $object = new RomanNumeral();
+        $object->fromInt(495);
+        $this->assertTrue( ( $object instanceof RomanNumeral ), 'This is not a roman numeral' );
+    }
 
 } // END RomanNumeralTest
 
