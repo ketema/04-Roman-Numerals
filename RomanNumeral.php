@@ -85,7 +85,7 @@ class RomanNumeral
         
         foreach ($romanNumerals as $romanNumeral)
         {
-            if( $this->_roman2decimal[$romanNumeral] < $this->roman2decimal[$last] )
+            if( $this->_roman2decimal[$romanNumeral] < $this->_roman2decimal[$last] )
             {
                 $calculated -= $this->_roman2decimal[$romanNumeral];
             }
